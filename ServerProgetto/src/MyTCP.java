@@ -37,7 +37,7 @@ public class MyTCP {
      */
     public void MyTCPClient(int socket) {
         try {
-            clientSocket = new Socket("192.168.255.1", socket); //crea socket client
+            clientSocket = new Socket("localhost", socket); //crea socket client
             outToServer = new DataOutputStream(clientSocket.getOutputStream()); //Crea output
             inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //Crea input per server
         } catch (Exception e) {
