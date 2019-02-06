@@ -1,0 +1,46 @@
+PLANNING
+
+Teamleader : 
+
+- Christian Guindani
+
+
+Partecipanti :
+
+- Boschini Federico
+
+- Jedda Ibrahim
+
+
+Breve descrizione del progetto :
+
+Modificare il progetto del primo quadrimestre rendendolo controllabile in remoto tramite l'utilizzo di un'architettura client server su java (TCP)
+
+
+Macro-argomenti:
+
+- Comunicazione java - arduino
+
+- GUI Java
+
+- Socket Java (TCP)
+
+- Gestione kinect per riconoscimento persone
+
+- Gestione accessi utenti
+
+
+Divisione Compiti:
+
+Client-Registrazione utenti : Jedda
+
+Server-Login utenti : Boschini
+
+Comunicazione Java-Arduino-Kinect: Guindani
+
+
+Fonti: 
+
+- https://stackoverflow.com/
+
+- https://research.dwi.ufl.edu/ufdw/j4k/
