@@ -5,6 +5,7 @@
  */
 package gui;
 
+import java.awt.Frame;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,6 +17,9 @@ public class index extends javax.swing.JFrame {
     /**
      * Creates new form index
      */
+    
+     gestioneDB gestoreDB=new gestioneDB();
+     
     public index() {
         initComponents();
     }
@@ -42,8 +46,6 @@ public class index extends javax.swing.JFrame {
 
         jLabel1.setText("Benvenuto!");
 
-        jPasswordField1.setText("jPasswordField1");
-
         jButton1.setText("ACCEDI");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,6 +58,11 @@ public class index extends javax.swing.JFrame {
         jLabel3.setText("PASSWORD");
 
         jButton2.setText("REGISTRATI");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Non hai un account?");
 
@@ -70,23 +77,21 @@ public class index extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(72, Short.MAX_VALUE)
+                        .addContainerGap(101, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jPasswordField1)
-                                    .addComponent(jTextField1)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(15, 15, 15)
-                                        .addComponent(jLabel1)))
-                                .addGap(39, 39, 39)))
+                                        .addComponent(jLabel1))
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                                    .addComponent(jPasswordField1))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)))
                 .addContainerGap())
         );
@@ -121,15 +126,37 @@ public class index extends javax.swing.JFrame {
         String username=jTextField1.getText();
         String password=jPasswordField1.getText();
         
+        
+        
          if(username.equals("") || password.equals(""))
         {
             JOptionPane.showMessageDialog(null, "ERRORE UNO O PIU' CAMPI SONO VUOTI");
         }
         else
         {
+          boolean condizione=gestoreDB.login(username, password);
+          
+          if(condizione==true)
+          {
+            Frame home=new home();
+            home.setVisible(true);
+            this.dispose();
+          }
+          else
+          {
+               JOptionPane.showMessageDialog(null, "ERRORE PASSWORD O USERNAME SBAGLIATI,RIPROVARE");
+          }
           
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        Frame frameRegistrati=new frameRegistrati();
+        frameRegistrati.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
