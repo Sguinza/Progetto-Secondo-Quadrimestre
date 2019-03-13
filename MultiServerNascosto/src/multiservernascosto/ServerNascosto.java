@@ -62,10 +62,17 @@ public class ServerNascosto extends Thread implements Observer
             {
                 gestioneTCP.MyTCPServer(welcomeSocket);
                 String messaggio = gestioneTCP.ServerRicevi();
+                String[] parts = messaggio.split(",");
                 System.out.println("Messaggio ricevuto: " + messaggio);
-                char carattere = messaggio.charAt(0);
-                myRxTx.output.write(carattere);
-                //myRxTx.output.write('c');
+                
+                if(parts[0].equals("MUOVI") || parts[0].equals("muovi"))
+                {
+                    char c = parts[1].charAt(0);
+                    System.out.println("valore partsato: " + c);
+                    myRxTx.output.write(c);
+                    myRxTx.output.write('\n');
+                }
+                
             }
         }
         catch(Exception e)

@@ -20,7 +20,7 @@ public class myRxTx implements SerialPortEventListener {
         "/dev/ttyACM0", //for Ubuntu
         "/dev/tty.usbserial-A9007UX1", // Mac OS X
         "/dev/ttyUSB0", // Linux
-        "COM5", // Windows
+        "COM4", // Windows
     };
     private BufferedReader input;
     OutputStream output;
