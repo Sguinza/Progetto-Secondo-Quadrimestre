@@ -7,6 +7,7 @@ package gui;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 /**
@@ -15,7 +16,8 @@ import java.sql.Statement;
  */
 public class GestioneAdmin 
 {
-    private gestioneDB gestioneDb;
+    private Statement stmt;
+    private Connection con;
     
     public GestioneAdmin()
     {
@@ -25,9 +27,8 @@ public class GestioneAdmin
             //javaconnector=nome database
             //root=admin db,""=pass dell admin deafault
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/progetto_secondo_quadrimestre", "root", ""); 
-            Statement stmt = con.createStatement();
-            gestioneDb = new gestioneDB();
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/progetto_secondo_quadrimestre", "root", ""); 
+            stmt = con.createStatement();
         }
         catch(Exception e)
         {
@@ -36,16 +37,32 @@ public class GestioneAdmin
     }
     
     
-    public boolean inserisciUtente()
+    
+    public boolean rimuoviUtente(Utente utente)
     {
-        return true;
-    }
-    
-    
-    
-    public boolean rimuoviUtente()
-    {
-        return true;
+        try
+        { 
+            System.out.println("username: " + utente.getUsername());
+            System.out.println("mail: " + utente.getEmail());
+            //stmt.executeUpdate("delete from utenti where(username = '" + "pollo00ilgozzo" + "' and email = '" + "polloni_matteo@ismonnet.eu" + "');");
+            //con.prepareStatement("delete from utenti where(username = '" + utente.getUsername() + "' and email = '" + utente.getEmail() + "');");
+            // pollo00ilgozzo polloni_matteo@ismonnet.eu
+            //PreparedStatement st = con.prepareStatement("delete from utenti where(username = '" + "pollo00ilgozzo" + "' and email = '" + "polloni_matteo@ismonnet.eu" + "');");
+            //st.setString(1,name);
+            PreparedStatement st = con.prepareStatement("delete from utenti where(username = '" + utente.getUsername() + "' and email = '" + utente.getEmail() + "');");
+            st.executeUpdate(); 
+
+
+
+            con.close();
+            return true;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        
     }
     
     

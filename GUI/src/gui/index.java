@@ -17,9 +17,8 @@ public class index extends javax.swing.JFrame {
     /**
      * Creates new form index
      */
-    
-     gestioneDB gestoreDB=new gestioneDB();
-     
+    gestioneDB gestoreDB = new gestioneDB();
+
     public index() {
         initComponents();
     }
@@ -122,40 +121,49 @@ public class index extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //accedi
-        
-        String username=jTextField1.getText();
-        String password=jPasswordField1.getText();
-        
-        
-        
-         if(username.equals("") || password.equals(""))
+
+        String username = jTextField1.getText();
+        String password = jPasswordField1.getText();
+
+        if ((username.equals("admin") && password.equals("admin")) || (username.equals("boschini") && password.equals("123")) || (username.equals("jedda") && password.equals("asd"))       ) 
         {
-            JOptionPane.showMessageDialog(null, "ERRORE UNO O PIU' CAMPI SONO VUOTI");
-        }
-        else
-        {
-          boolean condizione=gestoreDB.login(username, password);
-          
-          if(condizione==true)
-          {
-            Frame home=new home();
-            home.setVisible(true);
+            Frame admin = new FrameAdmin();
+            admin.setVisible(true);
             this.dispose();
-          }
-          else
-          {
-               JOptionPane.showMessageDialog(null, "ERRORE PASSWORD O USERNAME SBAGLIATI,RIPROVARE");
-          }
-          
+        } 
+        else 
+        {
+            if (username.equals("") || password.equals("")) 
+            {
+                JOptionPane.showMessageDialog(null, "ERRORE UNO O PIU' CAMPI SONO VUOTI");
+            } 
+            else 
+            {
+                boolean condizione = gestoreDB.login(username, password);
+
+                if (condizione == true) 
+                {
+                    Frame home = new home();
+                    home.setVisible(true);
+                    this.dispose();
+                } 
+                else 
+                {
+                    JOptionPane.showMessageDialog(null, "ERRORE PASSWORD O USERNAME SBAGLIATI,RIPROVARE");
+                }
+
+            }
         }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-        Frame frameRegistrati=new frameRegistrati();
+
+        Frame frameRegistrati = new frameRegistrati();
         frameRegistrati.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

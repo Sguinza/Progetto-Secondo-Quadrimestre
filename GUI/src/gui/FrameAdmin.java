@@ -5,17 +5,29 @@
  */
 package gui;
 
+
+import java.awt.Frame;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author boschini_federico
  */
 public class FrameAdmin extends javax.swing.JFrame {
 
+    private gestioneDB gestione;
+    private GestioneAdmin gestioneAdmin;
+    
     /**
      * Creates new form FrameAdmin
      */
     public FrameAdmin() {
         initComponents();
+        gestione = new gestioneDB();
+        gestioneAdmin = new GestioneAdmin();
+        visualizzaUtenti();
     }
     
     /**
@@ -24,6 +36,24 @@ public class FrameAdmin extends javax.swing.JFrame {
      */
     public void visualizzaUtenti()
     {
+        try
+        {
+            
+            List<Utente> lista = gestione.getUtenti();
+            DefaultListModel DLM = new DefaultListModel();
+            
+            for (int i = 0; i < lista.size(); i++) 
+            {
+                DLM.addElement(lista.get(i).getId() + " " + lista.get(i).getUsername() + " " + lista.get(i).getEmail() + "\n");
+                jList1.setModel(DLM);
+            }
+            
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
         
     }
     
@@ -41,8 +71,9 @@ public class FrameAdmin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,7 +87,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(161, 161, 161)
+                .addGap(180, 180, 180)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -82,9 +113,14 @@ public class FrameAdmin extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jScrollPane2.setViewportView(jList1);
+
+        jButton3.setText("Logout");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,12 +129,15 @@ public class FrameAdmin extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(50, 50, 50)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,8 +149,10 @@ public class FrameAdmin extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 59, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -121,6 +162,10 @@ public class FrameAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         //inserisci
+        Frame frameRegistrati = new frameRegistrati();
+        frameRegistrati.setVisible(true);
+        this.dispose();
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -128,8 +173,35 @@ public class FrameAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         //rimuovi
+        String u = jList1.getSelectedValue();
+        String[] parts = u.split(" ");
+        Utente utente = new Utente();
+        utente.setUsername(parts[1]);
+        utente.setEmail(parts[2]);
+        System.out.println("username: " + utente.getUsername());
+        System.out.println("mail: " + utente.getEmail());
+        if(gestioneAdmin.rimuoviUtente(utente))
+        {
+            JOptionPane.showMessageDialog(null, "Utente rimosso");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Utente non rimosso");
+        }
+        
+        visualizzaUtenti();
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        Frame frameIndex = new index();
+        frameIndex.setVisible(true);
+        this.dispose();
+        
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     
     /**
@@ -170,9 +242,10 @@ public class FrameAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

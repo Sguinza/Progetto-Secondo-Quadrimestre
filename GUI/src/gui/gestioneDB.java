@@ -167,6 +167,42 @@ public class gestioneDB
         
         return risultato;       
     }
+    
+    /**
+     * @author boschini_federico
+     * @brief
+     * @return 
+     */
+    public List<Utente> getUtenti()
+    {  
+        List lista = new ArrayList();
+        Utente utente = new Utente();
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/progetto_secondo_quadrimestre", "root", ""); //javaconnector=nome database                                                                                                //root=admin db,""=pass dell admin deafault
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from utenti");
+            while(rs.next())
+            {
+                if(!rs.getString(2).equals("admin") && !rs.getString(2).equals("boschini") && !rs.getString(2).equals("jedda"))
+                {
+                    utente = new Utente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+                    lista.add(utente);
+                }
+
+            }
+            con.close();
+            return lista;
+
+        } catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        
+        return lista;
+        
+    }
         
         
         
