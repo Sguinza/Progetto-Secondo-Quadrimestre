@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 public class ServerNascosto extends Thread implements Observer
 {
     myRxTx myRxTx;
+    GestioneTCP gestione;
     
     
     public ServerNascosto()
@@ -45,6 +46,7 @@ public class ServerNascosto extends Thread implements Observer
         myRxTx = new myRxTx(info);
         myRxTx.initialize();
         info.addObserver(this);
+        gestione = new GestioneTCP();
     }
 
     /**
@@ -64,12 +66,20 @@ public class ServerNascosto extends Thread implements Observer
                 String messaggio = gestioneTCP.ServerRicevi();
                 String[] parts = messaggio.split(",");
                 System.out.println("Messaggio ricevuto: " + messaggio);
+                String comando = parts[0].toUpperCase();
                 
-                if(parts[0].equals("MUOVI") || parts[0].equals("muovi"))
+                if(comando.equals("MUOVI"))
                 {
                     char c = parts[1].charAt(0);
                     System.out.println("valore partsato: " + c);
                     myRxTx.output.write(c);
+                    myRxTx.output.write('\n');
+                }
+                
+                if(comando.equals("MODALITA"))
+                {
+                    char c = parts[1].charAt(0);
+                    myRxTx.output.write(c); // 1 automatico -- 0 manuale
                     myRxTx.output.write('\n');
                 }
                 
