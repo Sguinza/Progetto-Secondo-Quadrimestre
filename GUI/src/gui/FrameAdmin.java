@@ -200,18 +200,26 @@ public class FrameAdmin extends javax.swing.JFrame {
         //Frame frameRegistrati = new frameRegistrati();
         //frameRegistrati.setVisible(true);
         //this.dispose();
-        if(gestioneAdmin.AggiungiUtente(jTextField1.getText(), jPasswordField1.getText(), jTextField2.getText()))
+        
+        if(jTextField1.getText().equals("") || jTextField2.getText().equals(""))
         {
-            JOptionPane.showMessageDialog(null, "Inserimento riuscito");
+            JOptionPane.showMessageDialog(null, "Uno o più campi vuoti");
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Inserimento non riuscito");
+            if(gestioneAdmin.AggiungiUtente(jTextField1.getText(), jPasswordField1.getText(), jTextField2.getText()))
+            {
+                JOptionPane.showMessageDialog(null, "Inserimento riuscito");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Inserimento non riuscito");
+            }
+            jTextField1.setText("");
+            jPasswordField1.setText("");
+            jTextField2.setText("");
+            visualizzaUtenti();
         }
-        jTextField1.setText("");
-        jPasswordField1.setText("");
-        jTextField2.setText("");
-        visualizzaUtenti();
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -221,19 +229,28 @@ public class FrameAdmin extends javax.swing.JFrame {
         
         //rimuovi
         String u = jList1.getSelectedValue();
-        String[] parts = u.split(" ");
-        Utente utente = new Utente();
-        utente.setUsername(parts[1].trim());
-        utente.setEmail(parts[2].trim());
-        System.out.println("username: " + utente.getUsername());
-        System.out.println("mail: " + utente.getEmail());
-        if(gestioneAdmin.rimuoviUtente(utente))
+                
+        if(u == null)
         {
-            JOptionPane.showMessageDialog(null, "Utente rimosso");
+            JOptionPane.showMessageDialog(null, "Non hai selezionato nessun utente");
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Utente non rimosso");
+            String[] parts = u.split(" ");
+            Utente utente = new Utente();
+            utente.setUsername(parts[1].trim());
+            utente.setEmail(parts[2].trim());
+            System.out.println("username: " + utente.getUsername());
+            System.out.println("mail: " + utente.getEmail());
+
+            if(gestioneAdmin.rimuoviUtente(utente))
+            {
+                JOptionPane.showMessageDialog(null, "Utente rimosso");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Utente non rimosso");
+            }
         }
         
         visualizzaUtenti();
