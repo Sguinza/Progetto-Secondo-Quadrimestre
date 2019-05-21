@@ -51,6 +51,9 @@ public class frameManuale extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
             public void windowDeactivated(java.awt.event.WindowEvent evt) {
                 formWindowDeactivated(evt);
             }
@@ -155,7 +158,6 @@ public class frameManuale extends javax.swing.JFrame {
             @Override
             public void run() {
                 startCam("rtsp://192.168.1.4:554/MediaInput/h264", jLabel2);
-                mandaMessaggio("MODALITA,1");
             }
         };
         t.start();
@@ -164,14 +166,14 @@ public class frameManuale extends javax.swing.JFrame {
     
     public void mandaMessaggio(String messaggio)
     {
-        gestione.MyTCPClient("192.168.1.3" ,3333);
        gestione.ClientManda(messaggio);
     }
     
     
     private void jButtonSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuActionPerformed
         // TODO add your handling code here:
-        //su                    
+        //su         
+        gestione.MyTCPClient("192.168.43.66" ,3333);
         mandaMessaggio("MUOVI,w");
 
 
@@ -180,33 +182,39 @@ public class frameManuale extends javax.swing.JFrame {
     private void jButtonGiuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGiuActionPerformed
         // TODO add your handling code here:
         //giu     
-        mandaMessaggio("MUOVI,s");
-        
-        
+        gestione.MyTCPClient("192.168.43.66" ,3333);
+        mandaMessaggio("MUOVI,s");       
         
     }//GEN-LAST:event_jButtonGiuActionPerformed
 
     private void jButtonDestraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDestraActionPerformed
         // TODO add your handling code here:        
-        //destra                    
+        //destra             
+        gestione.MyTCPClient("192.168.43.66" ,3333);
         mandaMessaggio("MUOVI,d");
-        
-        
         
     }//GEN-LAST:event_jButtonDestraActionPerformed
 
     private void jButtonSinistraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSinistraActionPerformed
         // TODO add your handling code here:
         //sinistra
+        gestione.MyTCPClient("192.168.43.66" ,3333);
         mandaMessaggio("MUOVI,a");
-        
-        
         
     }//GEN-LAST:event_jButtonSinistraActionPerformed
 
     private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
+        
+        gestione.MyTCPClient("192.168.43.66" ,3333);
         mandaMessaggio("MODALITA,0");
     }//GEN-LAST:event_formWindowDeactivated
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+
+        gestione.MyTCPClient("192.168.43.66" ,3333);
+        mandaMessaggio("MODALITA,1");
+                        
+    }//GEN-LAST:event_formWindowActivated
     public void startCam(String NomeIpCam, JLabel NomeLabelIpCam) {
         try {
             grabber = new OpenCVFrameGrabber(NomeIpCam);
