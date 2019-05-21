@@ -38,7 +38,7 @@ public class GestioneTCP {
      */
     public void MyTCPClient(int socket) {
         try {
-            clientSocket = new Socket("172.16.102.106", socket); //crea socket client
+            clientSocket = new Socket("localhost", socket); //crea socket client
             outToServer = new DataOutputStream(clientSocket.getOutputStream()); //Crea output
             inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //Crea input per server
         } catch (Exception e) {
