@@ -16,14 +16,7 @@ import java.util.Observer;
  * @brief Classe thread Server
  */
 public class ServerNascosto implements Observer
-{    
-    
-    public ServerNascosto()
-    {
-        Informazioni info = new Informazioni();
-        info.addObserver(this);
-    }
-    
+{   
     /**
      * @brief Run del thread server
      */
